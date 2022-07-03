@@ -26,6 +26,7 @@ module.exports = {
     rinkeby: {
       url: RINKEBY_URL,
       accounts: [process.env.PRIVATE_KEY],
+      chainId: 4,
     },
   },
   etherscan: {
