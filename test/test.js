@@ -19,4 +19,13 @@ describe("SimpleStorage", () => {
 
     assert.equal(currentValue.toString(), expectedValue);
   });
+  it("Add Person to array people", async () => {
+    let [expectedName, expectedNum] = ["Sharath", 10];
+    let txnResponse = await simpleStorage.addPerson(expectedName, expectedNum);
+    await txnResponse.wait(1);
+
+    let result = await simpleStorage.people(0);
+    assert.equal(result.name, expectedName);
+    assert.equal(result.favoriteNumber.toString(), expectedNum);
+  });
 });
