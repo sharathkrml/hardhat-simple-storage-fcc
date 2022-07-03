@@ -2,6 +2,7 @@ require("@nomiclabs/hardhat-waffle");
 require("dotenv").config();
 require("@nomiclabs/hardhat-etherscan");
 require("./tasks/block-number");
+require("hardhat-gas-reporter");
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
@@ -18,19 +19,29 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
-const RINKEBY_URL = process.env.RINEKBY_RPC_URL;
-console.log(RINKEBY_URL);
 module.exports = {
   solidity: "0.8.7",
   defaultNetwork: "hardhat",
   networks: {
     rinkeby: {
-      url: RINKEBY_URL,
-      accounts: [process.env.PRIVATE_KEY],
+      url: process.env.RINEKBY_RPC_URL || "",
+      accounts: [process.env.PRIVATE_KEY || ""],
       chainId: 4,
+    },
+    localhost: {
+      url: "http://127.0.0.1:8545/",
+      chainId: 31337,
     },
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_KEY,
+    apiKey: process.env.ETHERSCAN_KEY || "",
+  },
+  gasReporter: {
+    enabled: true,
+    outputFile: "gas-report.txt",
+    noColors: true,
+    currency: "INR",
+    coinmarketcap: process.env.COINMARKETCAP_KEY || "",
+    token: "MATIC",
   },
 };
